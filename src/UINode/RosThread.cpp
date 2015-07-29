@@ -186,6 +186,7 @@ void RosThread::run()
     toggleState_sub	   = nh_.subscribe(nh_.resolveName("ardrone/reset"),1, &RosThread::toggleStateCb, this);
 
     toggleCam_srv        = nh_.serviceClient<std_srvs::Empty>(nh_.resolveName("ardrone/togglecam"),1);
+    ///sy std::cout << nh_.resolveName("ardrone/togglecam") << std::endl;          /ardrone/togglecam
     flattrim_srv         = nh_.serviceClient<std_srvs::Empty>(nh_.resolveName("ardrone/flattrim"),1);
 
 	ros::Time last = ros::Time::now();
@@ -278,6 +279,8 @@ void RosThread::sendToggleState()
 void RosThread::sendToggleCam()
 {
 	pthread_mutex_lock(&send_CS);
+	///sy std::cout << "****Toggle Clicked****" << std::endl;                       ****Toggle Clicked****
+	///sy std::cout << "****" << toggleCam_srv.call(toggleCam_srv_srvs) << "****" << std::endl;    //****0****
 	toggleCam_srv.call(toggleCam_srv_srvs);
 	pthread_mutex_unlock(&send_CS);
 }
